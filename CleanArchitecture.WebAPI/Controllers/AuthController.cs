@@ -1,4 +1,6 @@
 ﻿using CleanArchitecture.Application.Authentication;
+using CleanArchitecture.Application.DTOs;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebAPI.Controllers
@@ -7,11 +9,11 @@ namespace CleanArchitecture.WebAPI.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthenticationService _authService;
+        private readonly IMediator _mediator;
 
-        public AuthController(IAuthenticationService authService)
+        public AuthController(IMediator mediator)
         {
-            _authService = authService;
+            _mediator = mediator;
         }
 
         [HttpPost("login")]
@@ -19,7 +21,8 @@ namespace CleanArchitecture.WebAPI.Controllers
         {
             try
             {
-                var result = await _authService.LoginAsync(request);
+                var command = new LoginCommand(request.Email, request.Password);
+                var result = await _mediator.Send(command);
                 return Ok(result);
             }
             catch (UnauthorizedAccessException ex)

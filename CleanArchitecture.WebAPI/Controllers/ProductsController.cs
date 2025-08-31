@@ -3,10 +3,12 @@ using CleanArchitecture.Application.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace CleanArchitecture.WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [EnableRateLimiting("fixed")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
