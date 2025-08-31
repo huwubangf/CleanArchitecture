@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Products.Commands;
 using CleanArchitecture.Application.Products.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebAPI.Controllers
@@ -15,7 +16,7 @@ namespace CleanArchitecture.WebAPI.Controllers
         {
             _mediator = mediator;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
